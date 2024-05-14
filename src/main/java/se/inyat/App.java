@@ -22,38 +22,21 @@ public class App {
 
     public static void main(String[] args) {
 
-        System.setProperty("log4j.configurationFile", "log4j2.properties");
-
-        Connection mysqlConnection = MeetingCalendarDBConnection.getConnection();
-        CalendarView view = new CalendarConsoleUI();
-        UserDao userDao = new UserDaoImpl(mysqlConnection);
-        userDao.createUser("admin");
-        System.out.println("userInfo = " + userDao.createUser("admin"));
-        CalendarDao calendarDao = new CalendarDaoImpl(mysqlConnection);
-
-
-        Optional<User> userOptional = userDao.findByUsername("admin");
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            System.out.println("User = " + user);
-            try {
-                user.checkHash("123456");
-            } catch (AuthenticationFailedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        //check authenticate(user) method in main class
         try {
-            userDao.authenticate(new User("admin", "123456"));
-            System.out.println("You are logged in ");
-        } catch (AuthenticationFailedException e){
-                System.out.println("User is Expired. username: " + e);
-        } catch (UserExpiredException e) {
-            throw new RuntimeException(e);
+            UserDao userDao = new UserDaoImpl(MeetingCalendarDBConnection.getConnection());
+            try {
+                userDao.authenticate(new User("admin", "$2a$10$32WnO6/dfSpGggA8IYPhu.Uqca/Jjrbl1ZiEZAFd.WWV3wwhNGZQa"));
+                System.out.println("you are logged in");
+
+            } catch (Exception e) {
+                CalendarExceptionHandler.handelException(e);
+            }
+
+        } catch (Exception e) {
+            CalendarExceptionHandler.handelException(e);
         }
     }
+}
 
-     //   CalendarController controller = new CalendarController(view, userDao, calendarDao);
-       // controller.run();
-    }
+
 

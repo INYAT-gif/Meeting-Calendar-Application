@@ -4,23 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Calendar {
-    private int calenderId;
-    private String calenderTitle;
-    private String calenderUsername;
+    private int calendarId;
+    private String calendarTitle;
+    private String calendarUsername;
     private List<Meeting> meetings;
 
     public Calendar(String title, String username) {
         this(title);
-        this.calenderUsername = username;
+        this.calendarUsername = username;
     }
 
     public Calendar(String title) {
-        this.calenderTitle = title;
+        this.calendarTitle = title;
     }
 
     public Calendar(int id, String title, String username, List<Meeting> meetings) {
         this(title, username);
-        this.calenderId = id;
+        this.calendarId = id;
         this.meetings = meetings;
     }
 
@@ -28,15 +28,15 @@ public class Calendar {
     }
 
     public int getId() {
-        return calenderId;
+        return calendarId;
     }
 
     public String getTitle() {
-        return calenderTitle;
+        return calendarTitle;
     }
 
     public String getUsername() {
-        return calenderUsername;
+        return calendarUsername;
     }
 
     public List<Meeting> getMeetings() {
@@ -57,9 +57,9 @@ public class Calendar {
     public String calendarInfo() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Calendar info: ").append("\n");
-        stringBuilder.append("id: ").append(calenderId).append("\n");
-        stringBuilder.append("Title: ").append(calenderTitle).append("\n");
-        stringBuilder.append("Username: ").append(calenderUsername).append("\n");
+        stringBuilder.append("id: ").append(calendarId).append("\n");
+        stringBuilder.append("Title: ").append(calendarTitle).append("\n");
+        stringBuilder.append("Username: ").append(calendarUsername).append("\n");
         return stringBuilder.toString();
     }
 }
