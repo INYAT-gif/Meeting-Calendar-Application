@@ -6,60 +6,56 @@ import se.inyat.model.Calendar;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 public class CalendarDaoImpl implements CalendarDao {
     private Connection connection;
+
     public CalendarDaoImpl(Connection connection) {
         this.connection = connection;
     }
+
     @Override
-    public Calendar createCalendar(String title, String username) {
-        //step1: define query || "select * from calendar where title = ? and username = ?"
-        //step2: prepared statement || PreparedStatement ps = connection.prepareStatement(query);
-        //step3: resultSet to store result || ResultSet rs = ps.executeQuery();
-        //step4: executeQuery
-        //step5: check the result set || if(rs.next())
-        //step6: return the result
-        //step7:
-
-        String query = "INSERT INTO calendar (title, username) VALUES (?, ?)";
-        try (
-                PreparedStatement preparedStatement = connection.prepareStatement(query);
-                ) {
-            Calendar calendar = new Calendar(title, username);
-            preparedStatement.setString(2, title);
-            preparedStatement.setString(3, username);
-
+    public Calendar createCalendar(String CalendarTitle, String CalendarUsername) {
+        String query = "INSERT INTO calendars (CalendarTitle, CalendarUsername) VALUES (?, ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)
+        ) {
+            Calendar Calendar = new Calendar(CalendarTitle, CalendarUsername);
+            preparedStatement.setString(1, CalendarTitle);
+            preparedStatement.setString(2, CalendarUsername);
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows == 0) {
-                throw new SQLException("Creating calendar failed, no rows affected.");
+                throw new MySQLException("Creating calendar failed, no rows affected.");
             }
-            return calendar;
+            return Calendar;
         } catch (SQLException e) {
-            throw new MySQLException("Error creating calendar" + e.getMessage());
+            throw new MySQLException("Creating calendar failed: " + CalendarTitle);
         }
-            }
+    }
+
 
     @Override
-    public Optional<Calendar> findById(int id) {
+    public Optional<Calendar> findByCalendarId(int CalendarId) {
         return Optional.empty();
     }
 
     @Override
-    public Collection<Calendar> findCalendarsByUsername(String username) {
-        return null;
+    public Collection<Calendar> findCalendarsByCalendarUsername(String CalendarUsername) {
+        return List.of();
     }
 
     @Override
-    public Optional<Calendar> findByTitle(String title) {
+    public Optional<Calendar> findByCalendarTitle(String CalendarTitle) {
         return Optional.empty();
     }
 
     @Override
-    public boolean deleteCalendar(int id) {
+    public boolean deleteCalendar(int CalendarId) {
         return false;
     }
 }
+

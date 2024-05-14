@@ -10,7 +10,9 @@ import se.inyat.data.impl.CalendarDaoImpl;
 import se.inyat.data.impl.UserDaoImpl;
 import se.inyat.exception.AuthenticationFailedException;
 import se.inyat.exception.CalendarExceptionHandler;
+import se.inyat.exception.MySQLException;
 import se.inyat.exception.UserExpiredException;
+import se.inyat.model.Calendar;
 import se.inyat.model.User;
 import se.inyat.view.CalendarConsoleUI;
 import se.inyat.view.CalendarView;
@@ -24,6 +26,35 @@ public class App {
 
         try {
             UserDao userDao = new UserDaoImpl(MeetingCalendarDBConnection.getConnection());
+
+            // Create a user
+            try {
+            //    User newUser = userDao.createUser("newUser");
+              //  System.out.println("Created user: " + newUser.getUsername());
+//Create a calendar
+
+                // Authenticate a user
+                try {
+                    User existingUser = new User("newUser", "$2a$10$htvgxB0leaXz0ILq6JRczOqAByrDdYibZyG/6PoYMQtfz4kjJwDWm");
+                    if (userDao.authenticate(existingUser)) {
+                        System.out.println("Authentication successful");
+                    } else {
+                        System.out.println("Authentication failed");
+                    }
+                } catch (AuthenticationFailedException | UserExpiredException e) {
+                    System.err.println(e.getMessage());
+                }
+
+            } catch (MySQLException e) {
+                System.err.println(e.getMessage());
+            }
+        } catch (MySQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+}
+     /**   try {
+            UserDao userDao = new UserDaoImpl(MeetingCalendarDBConnection.getConnection());
             try {
                 userDao.authenticate(new User("admin", "$2a$10$32WnO6/dfSpGggA8IYPhu.Uqca/Jjrbl1ZiEZAFd.WWV3wwhNGZQa"));
                 System.out.println("you are logged in");
@@ -32,11 +63,32 @@ public class App {
                 CalendarExceptionHandler.handelException(e);
             }
 
-        } catch (Exception e) {
-            CalendarExceptionHandler.handelException(e);
-        }
+            try {
+                CalendarDao calendarDao = new CalendarDaoImpl(MeetingCalendarDBConnection.getConnection());
+                System.out.println("you have created a calendar");
+            } catch (Exception e) {
+                CalendarExceptionHandler.handelException(e);
+            }
+
+            try (Connection connection = MeetingCalendarDBConnection.getConnection()) {
+                CalendarDao calendarDao = new CalendarDaoImpl(connection);
+                try {
+                    userDao.authenticate(new User("admin", "$2a$10$32WnO6/dfSpGggA8IYPhu.Uqca/Jjrbl1ZiEZAFd.WWV3wwhNGZQa"));
+                    System.out.println("you are logged in");
+                } catch (UserExpiredException | AuthenticationFailedException e) {
+                    CalendarExceptionHandler.handelException(e);
+                }
+            }
+                CalendarController calendarController = new CalendarController();
+                CalendarView calendarView = new CalendarConsoleUI();
+                calendarController.run();
+            } catch (Exception e) {
+                CalendarExceptionHandler.handelException(e);
+            }
+
     }
 }
 
 
 
+*/

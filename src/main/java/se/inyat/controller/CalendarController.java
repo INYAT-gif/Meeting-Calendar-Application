@@ -18,7 +18,7 @@ public class CalendarController {
     private boolean isLoggedIn;
     private String username;
 
-    public CalendarController(CalendarView view, UserDao userDao, CalendarDao calendarDao) {
+    public CalendarController() {
         this.view = view;
         this.userDao = userDao;
         this.calendarDao = calendarDao;
