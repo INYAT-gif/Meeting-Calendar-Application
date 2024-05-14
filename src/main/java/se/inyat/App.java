@@ -29,30 +29,34 @@ public class App {
 
             // Create a user
             try {
-            //    User newUser = userDao.createUser("newUser");
-              //  System.out.println("Created user: " + newUser.getUsername());
+                //    User newUser = userDao.createUser("newUser");
+                //  System.out.println("Created user: " + newUser.getUsername());
 //Create a calendar
 
-                // Authenticate a user
-                try {
-                    User existingUser = new User("newUser", "$2a$10$htvgxB0leaXz0ILq6JRczOqAByrDdYibZyG/6PoYMQtfz4kjJwDWm");
-                    if (userDao.authenticate(existingUser)) {
-                        System.out.println("Authentication successful");
-                    } else {
-                        System.out.println("Authentication failed");
-                    }
-                } catch (AuthenticationFailedException | UserExpiredException e) {
-                    System.err.println(e.getMessage());
-                }
 
-            } catch (MySQLException e) {
-                System.err.println(e.getMessage());
+                try {
+                    CalendarDao calendarDao = new CalendarDaoImpl(MeetingCalendarDBConnection.getConnection());
+                    try {
+                        Calendar newCalendar = calendarDao.createCalendar("New Calendar", "testUser");
+                        System.out.println("Created calendar: " + newCalendar.getClass());
+                    } catch (MySQLException e) {
+                        System.err.println(e.getMessage());
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            } catch (RuntimeException e) {
+                throw new RuntimeException(e);
             }
-        } catch (MySQLException e) {
-            System.err.println(e.getMessage());
+        } finally {
+
+        }
+
         }
     }
-}
+
+
+
      /**   try {
             UserDao userDao = new UserDaoImpl(MeetingCalendarDBConnection.getConnection());
             try {
@@ -88,7 +92,4 @@ public class App {
 
     }
 }
-
-
-
 */
