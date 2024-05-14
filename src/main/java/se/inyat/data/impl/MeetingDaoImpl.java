@@ -95,11 +95,6 @@ public class MeetingDaoImpl implements MeetingDao {
 
     @Override
     public Collection<Meeting> findAllMeetingsByCalendarId(int calendarId) {
-        return null;
-    }
-
-    /**  @Override
-    public Collection<Meeting> findAllMeetingsByCalendarId(int calendarId) {
         List<Meeting> meetings = new ArrayList<>();
         String selectQuery = "SELECT * FROM meetings WHERE calendar_id = ?";
 
@@ -117,15 +112,15 @@ public class MeetingDaoImpl implements MeetingDao {
                     Timestamp startTime = resultSet.getTimestamp("start_time");
                     Timestamp endTime = resultSet.getTimestamp("end_time");
                     String description = resultSet.getString("_description");
-                    Calendar calendar = null;
+
 
                     LocalDateTime startDateTime = startTime.toLocalDateTime();
                     LocalDateTime endDateTime = endTime.toLocalDateTime();
 
 
-                    Meeting meeting = new Meeting( meetingId, title, startTime, endTime, description );
-
-                    meetings.add(meeting);
+                    //Meeting meeting = new Meeting(meetingId, title, startDateTime, endDateTime, description );
+                    new Meeting(meetingId, title, startDateTime, endDateTime, description, new Calendar(calendarId, null, null));
+//                    meetings.add(meeting);
                 }
             }
 
@@ -136,7 +131,7 @@ public class MeetingDaoImpl implements MeetingDao {
         }
         return meetings;
     }
-*/
+
     @Override
     public boolean deleteMeeting(int meetingId) {
         // todo: needs completion

@@ -14,6 +14,13 @@ public class CalendarDaoImpl implements CalendarDao {
     }
     @Override
     public Calendar createCalendar(String title, String username) {
+        //step1: insert query
+        //step2: prepare statement
+        //step3: resultSet
+        //step4:
+        //step5:
+        //Plan for 20240515 MVC design pattern
+
         return null;
     }
 
