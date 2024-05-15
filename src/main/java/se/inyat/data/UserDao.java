@@ -14,5 +14,5 @@ public interface UserDao {
 
     boolean authenticate(User user) throws UserExpiredException, AuthenticationFailedException;
 
-    // add more methods according to the project
+    // add more if needed
 }

@@ -8,13 +8,13 @@ import java.util.Optional;
 
 public interface CalendarDao { //CRUD Operation
 
-    Calendar createCalendar(String CalendarTitle, String CalendarUsername);
+    Calendar createCalendar(String title, String username);
 
-    Optional<Calendar> findByCalendarId(int CalendarId);
+    Optional<Calendar> findById(int id);
 
-    Collection<Calendar> findCalendarsByCalendarUsername(String CalendarUsername);
+    Collection<Calendar> findByUsername(String username);
 
-    Optional<Calendar> findByCalendarTitle(String CalendarTitle);
+    Optional<Calendar> findByTitle(String title);
 
-    boolean deleteCalendar(int CalendarId);
+    boolean deleteCalendar(int id);
 }
