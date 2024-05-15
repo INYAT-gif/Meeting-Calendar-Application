@@ -12,7 +12,7 @@ public interface CalendarDao { //CRUD Operation
 
     Optional<Calendar> findById(int id);
 
-    Collection<Calendar> findCalendarsByUsername(String username);
+    Collection<Calendar> findByUsername(String username);
 
     Optional<Calendar> findByTitle(String title);
 

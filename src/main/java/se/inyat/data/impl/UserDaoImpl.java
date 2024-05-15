@@ -17,7 +17,7 @@ import java.util.Optional;
 
 public class UserDaoImpl implements UserDao {
 
-    private static final Logger log = LogManager.getLogger(UserDaoImpl.class);
+    //private static final Logger log = LogManager.getLogger(UserDaoImpl.class);
 
     private Connection connection;//static field, global variable in class fields
 
@@ -28,8 +28,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User createUser(String username) {
         String query = "INSERT INTO USERS(USERNAME, _PASSWORD) VALUES(?,?)"; //insert new row in users table
-        log.info("Creating user: {} ", username);//log user creation to console
-
+        //log.info("Creating user: {} ", username);//log user creation to console
         try (
                 //Connection connection = MeetingCalendarDBConnection.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(query);//BECAUSE WE HAVE PARAMETERS
@@ -38,17 +37,19 @@ public class UserDaoImpl implements UserDao {
             user.newPassword();
             preparedStatement.setString(1, user.getUsername());//set username
             preparedStatement.setString(2, user.getHashedPassword());//set password
+
             int affectedRows = preparedStatement.executeUpdate();//executeUpdate because we are inserting/modifying a row
             if (affectedRows == 0) {//check if insert was successful
                 String errorMessage = "Creating user failed, no rows affected.";
-                log.error(errorMessage);//log error if insert was not successful
                 throw new MySQLException(errorMessage);
+                //log.error(errorMessage);//log error if insert was not successful
+
             }
             return user;//if it was not null return user
         } catch (SQLException e) {
             String errorMessage = "Error occurred while creating user: " + username;
-            log.error(errorMessage);
-            throw new MySQLException(errorMessage, e);//("Error occurred while creating user" + username);
+            //log.error(errorMessage);
+            throw new MySQLException(errorMessage + username);//("Error occurred while creating user" + username);
         }
     }
 
@@ -67,8 +68,9 @@ public class UserDaoImpl implements UserDao {
                 String foundUsername = resultSet.getString("USERNAME");//get username and assign it to Java object
                 String foundPassword = resultSet.getString("_PASSWORD");//name of column is _PASSWORD
                 boolean foundExpired = resultSet.getBoolean("EXPIRED");//foundExpired column is boolean and assign it to Java object
-                User user = new User(foundUsername, foundPassword, foundExpired);//create user object using username, password and foundExpired
-                return Optional.of(user);//put it in Optional to check it if it is empty
+
+                User foundUser = new User(foundUsername, foundPassword, foundExpired);//create user object using username, password and foundExpired
+                return Optional.of(foundUser);//put it in Optional to check it if it is empty
             } else {//if resultSet does not exist return empty and returnType is Optional so cannot return null
                 return Optional.empty();//return Optional
             }
@@ -81,7 +83,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean authenticate(User user) throws AuthenticationFailedException, UserExpiredException { //  (admin - 123456)
         String query = "SELECT * FROM USERS WHERE USERNAME = ?";//STEP1: DEFINE QUERY || SELECT * FROM USERS WHERE USERNAME = ?
-        log.info("authenticate user: {}:", user.getUsername());
+        //log.info("authenticate user: {}:", user.getUsername());
         try (
                 PreparedStatement preparedStatement = connection.prepareStatement(query);//STEP2: PREPARE STATEMENT
         ) {
@@ -90,18 +92,18 @@ public class UserDaoImpl implements UserDao {
             if (resultSet.next()) {//STEP5: check if user exists|| checking the resultSet if it has value if our result set exists
                 boolean isExpired = resultSet.getBoolean("EXPIRED");//STEP6: check if user is expired
                 if (isExpired) {
-                    log.warn("User is Expired. username: {}", user.getUsername());
+//                    log.warn("User is Expired. username: {}", user.getUsername());
                     throw new UserExpiredException("User is Expired. username: " + user.getUsername());//IF 'resultSet' was null
                 }
                 String hashedPassword = resultSet.getString("_PASSWORD");
                 user.checkHash(hashedPassword);
             } else {
-                log.warn("Authentication failed. Invalid credentials.");
+           //     log.warn("Authentication failed. Invalid credentials.");
                 throw new AuthenticationFailedException("Authentication failed. Invalid credentials.");
             }
             return true;//step9: if we don't throw any exception then return true
         } catch (SQLException e) {
-            log.error("Error occurred while authenticating user by username: {}", user.getUsername(), e);
+            //log.error("Error occurred while authenticating user by username: {}", user.getUsername(), e);
             throw new MySQLException("Error occurred while authenticating user by username: " + user.getUsername(), e);
             //if there was something wrong with executing query then throw MySQLException
         }

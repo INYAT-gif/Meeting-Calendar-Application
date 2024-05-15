@@ -7,7 +7,7 @@ public class Meeting {
     private int id;
     private String title;
     private LocalDateTime startTime; // 2024-05-13 10:00
-    private LocalDateTime endTime; // 2024-05-13 09:00
+    private LocalDateTime endTime; // endTime cannot be before startTime 2024-05-13 09:00
     private String description;
     private Calendar calendar;
 

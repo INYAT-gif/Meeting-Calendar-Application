@@ -134,7 +134,17 @@ public class MeetingDaoImpl implements MeetingDao {
 
     @Override
     public boolean deleteMeeting(int meetingId) {
-        // todo: needs completion
-        return false;
+        String deleteQuery = "DELETE FROM meetings WHERE id = ?";
+        try (
+                PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)
+        ) {
+            preparedStatement.setInt(1, meetingId);
+
+            int affectedRows = preparedStatement.executeUpdate();
+            return affectedRows > 0;
+    } catch (SQLException e) {
+            String errorMessage = "Error occurred while deleting a meeting";
+            throw new MySQLException(errorMessage, e);
+        }
     }
 }

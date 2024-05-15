@@ -12,16 +12,16 @@ public class User {
     private String password; // 123456
     private boolean expired;
 
-
+    //Construction for Registration
     public User(String username) {
         this.username = username;
     }
-
+    //for Login||Authentication
     public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
-
+    //for Forgot Password
     public User(String username, String password, boolean expired) {
         this.username = username;
         this.password = password;
@@ -61,7 +61,9 @@ public class User {
         String allowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         int passwordLength = 10;
         StringBuilder stringBuilder = new StringBuilder();
+
         Random random = new SecureRandom();
+
         for (int i = 0; i < passwordLength; i++) {
             int randomIndex = random.nextInt(allowedCharacters.length());
             char randomChar = allowedCharacters.charAt(randomIndex);
