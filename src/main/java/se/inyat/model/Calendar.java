@@ -15,17 +15,15 @@ public class Calendar {
     }
 
     public Calendar(String title) {
+
         this.title = title;
     }
-
-    public Calendar(int id, String title, String username, List<Meeting> meetings) {
+    //createCalendar in database
+    public Calendar(int id, String title, String username) {
         this(title, username);
         this.id = id;
-        this.meetings = meetings;
     }
-//createCalendar in database
-    public Calendar(int id, String username, String title) {
-    }
+
 
     public int getId() {
         return id;

@@ -38,7 +38,7 @@ public class CalendarDaoImpl implements CalendarDao {
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int calendarId = generatedKeys.getInt(1); //
-                    return new Calendar(calendarId, CalendarTitle, CalendarUsername);
+                    return new Calendar(calendarId, CalendarTitle, CalendarUsername);//because our returnType is Calendar
                 } else {
                     throw new MySQLException("Creating calendar failed, no ID obtained.");
                 }
@@ -60,7 +60,7 @@ public class CalendarDaoImpl implements CalendarDao {
 
                     String username = resultSet.getString("username");
                     String title = resultSet.getString("title");
-                    return Optional.of(new Calendar(id, username, title));
+                    return Optional.of(new Calendar(id, username, title));//created a new Calendar object and return it
                 }
             }
         } catch (SQLException e) {
@@ -80,8 +80,8 @@ public class CalendarDaoImpl implements CalendarDao {
                 preparedStatement.setString(1, username);
 
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    while (resultSet.next()) {
-                        int id = resultSet.getInt("id");
+                    while (resultSet.next()) {//instead of writing if we can iterate through the resultSet
+                        int id = resultSet.getInt("id");//we get using credentials from the database
                         String title = resultSet.getString("title");
                         calendars.add(new Calendar(id, username, title));
                     }
@@ -125,7 +125,7 @@ public class CalendarDaoImpl implements CalendarDao {
             preparedStatement.setInt(1, id);
 
             int affectedRows = preparedStatement.executeUpdate();
-            return affectedRows > 0;
+            return affectedRows > 0;//Returns true if at least one row was deleted
         } catch (SQLException e) {
             String errorMessage = "Error occurred while deleting a calendar by ID " + id;
             throw new MySQLException(errorMessage, e);

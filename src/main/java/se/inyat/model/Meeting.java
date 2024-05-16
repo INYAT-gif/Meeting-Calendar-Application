@@ -12,6 +12,7 @@ public class Meeting {
     private Calendar calendar;
 
 
+
     public Meeting(String title, LocalDateTime startTime, LocalDateTime endTime, String description) {
         this.title = title;
         this.startTime = startTime;
@@ -35,7 +36,13 @@ public class Meeting {
         this.description = description;
         this.calendar = calendar;
     }
-
+    public Meeting(int id, String title, LocalDateTime startTime, LocalDateTime endTime, String description) {
+        this.id = id;
+        this.title = title;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.description = description;
+    }
     public int getId() {
         return id;
     }
