@@ -18,6 +18,7 @@ public class MeetingDaoImpl implements MeetingDao {
     private Connection connection;
 
     public MeetingDaoImpl(Connection connection) {
+
         this.connection = connection;
     }
 
@@ -30,7 +31,7 @@ public class MeetingDaoImpl implements MeetingDao {
                 PreparedStatement preparedStatement = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, meeting.getTitle());
-            preparedStatement.setTimestamp(2, Timestamp.valueOf(meeting.getStartTime()));
+            preparedStatement.setTimestamp(2, Timestamp.valueOf(meeting.getStartTime()));//Timestamp contains LocalDateTime
             preparedStatement.setTimestamp(3, Timestamp.valueOf(meeting.getEndTime()));
             preparedStatement.setString(4, meeting.getDescription());
             preparedStatement.setInt(5, meeting.getCalendar().getId());
@@ -64,7 +65,8 @@ public class MeetingDaoImpl implements MeetingDao {
         String selectQuery = "SELECT m.*, mc.username as username, mc.title as calendarTitle FROM meetings m inner join meeting_calendars mc on m.calendar_id = mc.id WHERE m.id = ?";
 
         try (
-                PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
+                PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)
+        ) {
 
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
