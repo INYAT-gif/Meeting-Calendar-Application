@@ -4,8 +4,8 @@ import se.inyat.data.UserDao;
 import se.inyat.exception.CalendarExceptionHandler;
 import se.inyat.model.Calendar;
 import se.inyat.model.User;
-import se.inyat.view.CalendarView;
 import se.inyat.data.CalendarDao;
+import se.inyat.view.CalendarView;
 
 public class CalendarController {//act as a breach between model and view in controller.java
     //all this functionality and logic are going to be implemented here
