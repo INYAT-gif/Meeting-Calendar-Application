@@ -1,5 +1,4 @@
-# Meeting Calendar Project Functionalities
-### In this console-based project, we plan to implement the following core functionalities:
+# Meeting Calendar Project Functionalities (Console based functionalities):
 
 ### 1. User Authentication: Users will be able to create accounts, log in, and authenticate their identities to access the calendar and meetings.
 
