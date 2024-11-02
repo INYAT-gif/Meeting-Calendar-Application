@@ -1,4 +1,4 @@
-![Uploading image.png…]()
+![image](https://github.com/user-attachments/assets/1a881cc1-2631-458c-8b05-f084bdc0f949)
 # Meeting Calendar (Console based functionalities):
 
 ### 1. User Authentication: Users will be able to create accounts, log in, and authenticate their identities to access the calendar and meetings.
