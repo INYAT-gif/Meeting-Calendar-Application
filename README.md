@@ -1,3 +1,4 @@
+![Uploading image.png…]()
 # Meeting Calendar (Console based functionalities):
 
 ### 1. User Authentication: Users will be able to create accounts, log in, and authenticate their identities to access the calendar and meetings.
